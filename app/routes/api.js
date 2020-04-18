@@ -11,17 +11,25 @@ module.exports = function(router) {
     
     
         if (data.username == null || data.password == null || user.email == null) {
-            res.send("Field cannot be empty");
+            res.json({
+                success: false,
+                message: "Field cannot be empty"
+            });
         } else {
             user.save(function (err, doc) {
                  if (err) {
                     res.send(err);
                 } else {
-                    res.send("User is created!");
+                    res.json({
+                        success: true,
+                        message: "User has been created!"
+                    });
                 }
             });
         }
     });
+
+    
 
     return router;
 

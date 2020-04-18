@@ -1,7 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" >
 
 <head>
+    <base href="/">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -13,9 +14,9 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-    <script src="../assets/js/angular.js"></script>
-    <script src="../assets/js/angular-route.js"></script>
-
+    <link href="starter-template.css" rel="stylesheet">
+    <!-- <script src="assets/js/angular.js"></script> -->
+    <!-- <script src="assets/js/angular-route.js"></script> -->
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -32,11 +33,21 @@
             }
         }
     </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
+    <script src="app/controllers/UserCtrl.js"></script>
+    <script src="app/routes.js"></script>
+    <script src="app/app.js"></script>
+    
+   
+
+    
     <!-- Custom styles for this template -->
-    <link href="starter-template.css" rel="stylesheet">
+   
 </head>
 
-<body>
+<body ng-app="userApp">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
@@ -47,22 +58,13 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/about">About</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/register">Register</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -72,10 +74,22 @@
         </div>
     </nav>
 
-    <main role="main" class="container">
+    <main role="main">
 
-    </main>
-    <script src="../assets/js/jquery-3.5.0.min.js"></script>
-    <script src="../assets/js/bootstrap.min.js"></script>
+        <section class="jumbotron text-center">
+          <div class="container">
+            <h1>Album example</h1>
+            <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+            <p>
+              <a href="#" class="btn btn-primary my-2">Main call to action</a>
+              <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+            </p>
+          </div>
+        </section>
+        <div ng-view></div>
+      </main>
+    </body>
+    <script src="assets/js/jquery-3.5.0.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
 
 </html>

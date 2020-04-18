@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-3">
+        <div class="page-header">
+            <h3>User Registration</h3>
+        </div>
+    
+        <div class="alert alert-info" ng-show="register.isSuccess">{{ register.Msg}}</div>
+        <div class="alert alert-danger" ng-show="!register.isSuccess && register.Msg">{{ register.Msg}}</div>
+        <form ng-submit="register.submitRegisterUser()">
+            <label for="email">Email: </label>
+            <input type="text" name="email" id="email" class="form-control" ng-model="register.regData.email">
+            <br>
+            <label for="username">Username:s</label>
+            <input type="text" name="username" id="username" class="form-control" ng-model="register.regData.username">
+            <br>
+            <label for="password">Password: </label>
+            <input type="text" name="password" id="password" class="form-control" ng-model="register.regData.password">
+            <br>
+            <button class="btn btn-success" type="submt">Register</button>
+        </form>
+    </div>
+</div>

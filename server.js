@@ -16,7 +16,7 @@ app.use("/api", appRoutes);
 app.use(express.static(__dirname+'/public'));
 
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname+'/public/app/index.html'));
+    res.sendFile(path.join(__dirname+'/public/app/views/index.html'));
 });
 
 
@@ -32,10 +32,6 @@ mongoose.connect('mongodb://localhost:27017/MeanStack', {
         console.log("Mongo connected");
     }
 });
-
-
-
-
 
 
 app.listen(PORT, () => {
