@@ -29,6 +29,42 @@ module.exports = function(router) {
         }
     });
 
+
+    router.post("/auth", (req, res) => {
+    
+       User.findOne({ username : req.body.username }).select('email username password').exec(function(err, user){
+        if (err) throw err;
+        if (!user) {
+            res.json({
+                success: false, 
+                message: "User not authenticated!"
+            });
+        } else if(user) { 
+            if (!req.body.password) {
+                res.json({
+                    success: false, 
+                    message: "No password provided!"
+                });
+              
+            } 
+            const validPassword = user.comparePasswords(req.body.password);
+            if (!validPassword) {
+                res.json({
+                    success: false,
+                    message: "Not valid password!"
+                });
+            } else {
+                res.json({
+                    success: true,
+                    message: "User authenticated!"
+                });
+            }
+
+
+        }
+       });
+    });
+
     
 
     return router;

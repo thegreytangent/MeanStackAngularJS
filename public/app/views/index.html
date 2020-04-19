@@ -43,8 +43,11 @@
     <script src="app/routes.js"></script>
     
     <script src="app/controllers/UserCtrl.js"></script>
+    <script src="app/controllers/MainCtrl.js"></script>
 
     <script src="app/services/UserService.js"></script>
+    <script src="app/services/AuthService.js"></script>
+
     
     
     
@@ -55,7 +58,7 @@
    
 </head>
 
-<body ng-app="userApp">
+<body ng-app="userApp" ng-controller="MainCtrl as main">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
@@ -70,6 +73,9 @@
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/about">About</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/register">Register</a>
