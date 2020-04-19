@@ -1,22 +1,22 @@
-angular.module('UserController', []).
+angular.module('UserController', ['UserService']).
 
-controller('regCtrl', function($http) {
-    
-    const app = this;
-    console.log(app.Msg);
-    this.submitRegisterUser = function() {
+    controller('regCtrl', function ($http, $location, $timeout, User) {
 
-        $http.post('api/users', this.regData).then(function(data){
-            app.isSuccess = data.data.success;
-            app.Msg = data.data.message;
-                console.log("api/users", data);
-        });
-
+        const app = this;
        
-     
-    
-  
-   }
+        this.submitRegisterUser = function () {
+            app.loading = true;
+            User.create(app.regData).then(function (data) {
+                app.isSuccess = data.data.success;
+                app.Msg = data.data.message;
+
+                $timeout(function(){
+                    $location.path("/");
+                },2000);
+              
+                app.loading = false;
+            });
+        }
 
 
-});
+    });
