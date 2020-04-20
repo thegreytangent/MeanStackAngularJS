@@ -1,15 +1,32 @@
 angular.module('MainController', ['AuthService'])
-.controller('MainCtrl', function(Auth, $timeout, $location){
+.controller('MainCtrl', function(Auth, $timeout, $location, $rootScope){
   const app = this;
 
-  if (Auth.isLogin()) {
-    console.log("login");
-    Auth.getUser().then((data) => {
-        console.log("is_login ", data);
-    });
-  } else {
-    console.log("not login");
-  }
+
+
+  app.loadMe = false;
+
+
+  $rootScope.$on('$routeChangeStart', () => {
+      console.log("Route change");
+
+      if (Auth.isLogin()) {
+        app.isLogin = true;
+        Auth.getUser().then((data) => {
+          const user = data.data;
+          app.username = user.username;
+          app.email = user.email;
+          console.log("isLogin", app.username);
+        });
+      } else {
+        app.isLogin = false;
+      }
+
+      app.loadMe = true;
+
+  });
+
+
 
 
     this.doLogin = function() {
@@ -41,6 +58,10 @@ angular.module('MainController', ['AuthService'])
       Auth.logout();
       $location.path("/logout");
       $timeout(()=> {
+          app.loginData = null;
+          app.isSuccess = null;
+          app.Msg = null;
+          app.username = null;
             $location.path("/");
       }, 2000);
     }

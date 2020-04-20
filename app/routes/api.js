@@ -62,7 +62,11 @@ module.exports = function(router) {
             message: "Not valid password!"
           });
         } else {
-          const token =  Token.sign({ username: user.username,  password: user.password }, secret, { expiresIn: '24h'});
+          const token =  Token.sign({
+             email: user.email,
+             username: user.username,
+             password: user.password
+           }, secret, { expiresIn: '24h'});
           res.json({
             success: true,
             message: "User authenticated!",
@@ -78,6 +82,7 @@ module.exports = function(router) {
 
 
   router.use( (req, res, next) => {
+
     var token = req.body.token || req.body.query || req.headers['x-access-token'];
     if (token) {
       Token.verify(token, secret, (err, decoded) => {
@@ -88,6 +93,7 @@ module.exports = function(router) {
           });
         }else {
           req.decoded = decoded;
+          console.log("body query ", req.decoded);
           next();
         }
       });

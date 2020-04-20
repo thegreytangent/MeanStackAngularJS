@@ -58,7 +58,7 @@
 
 </head>
 
-<body ng-app="userApp" ng-controller="MainCtrl as main">
+<body ng-app="userApp" ng-controller="MainCtrl as main" ng-show="main.loadMe" ng-cloak>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
@@ -74,14 +74,18 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/about">About</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item active"  ng-show="!main.isLogin">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item active" ng-show="!main.isLogin">
                     <a class="nav-link" href="/register">Register</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item active"  ng-show="main.isLogin">
                     <a class="nav-link" href="#" ng-click="main.logout()">Logout</a>
+                </li>
+
+                <li class="nav-item active"  ng-show="main.isLogin">
+                    <a class="nav-link" href="/profile">Hello {{ main.username }}</a>
                 </li>
 
             </ul>
