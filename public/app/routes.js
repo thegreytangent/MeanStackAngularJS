@@ -9,15 +9,19 @@ angular.module('appRoutes',['ngRoute'])
     })
     .when('/register', {
         templateUrl: 'app/views/pages/register.html',
-        controller: 'regCtrl', 
+        controller: 'regCtrl',
         controllerAs: 'register'
     })
     .when('/login', {
         templateUrl: 'app/views/pages/login.html',
         controller: 'MainCtrl',
         controllerAs: 'main'
-      
+
     })
+    .when('/logout', {
+        templateUrl: 'app/views/pages/logout.html',
+      })
+
     .otherwise({
         redirectTo: '/'
     })
@@ -26,5 +30,5 @@ angular.module('appRoutes',['ngRoute'])
         enabled: true,
         requireBase: true
     });
-   
+
 });

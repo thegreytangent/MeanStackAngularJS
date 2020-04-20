@@ -1,20 +1,25 @@
 angular.module('MainController', ['AuthService'])
 .controller('MainCtrl', function(Auth, $timeout, $location){
-   
+  const app = this;
 
-    const app = this;
-       
-    this.doLogin = function () {
+  if (Auth.isLogin()) {
+    console.log("login");
+  } else {
+    console.log("not login");
+  }
+
+
+    this.doLogin = function() {
+
         app.loading = true;
         Auth.login(app.loginData).then(function (data) {
             const loginData = app.loginData;
-            console.log({
-                loginData,
-                data
-            });
+
+            console.log("data", data);
+
             app.isSuccess = data.data.success;
             app.Msg = data.data.message;
-            
+
             if (!app.isSuccess) {
                 return false;
             }else {
@@ -22,12 +27,21 @@ angular.module('MainController', ['AuthService'])
                     $location.path("/");
                 },2000);
             }
-            
-          
+
+
             app.loading = false;
         });
     }
-    
+
+
+    this.logout = () => {
+      Auth.logout();
+      $location.path("/logout");
+      $timeout(()=> {
+            $location.path("/");
+      }, 2000);
+    }
+
 
 
 });

@@ -41,21 +41,21 @@
 
     <script src="app/app.js"></script>
     <script src="app/routes.js"></script>
-    
+
     <script src="app/controllers/UserCtrl.js"></script>
     <script src="app/controllers/MainCtrl.js"></script>
 
     <script src="app/services/UserService.js"></script>
     <script src="app/services/AuthService.js"></script>
 
-    
-    
-    
-   
 
-    
+
+
+
+
+
     <!-- Custom styles for this template -->
-   
+
 </head>
 
 <body ng-app="userApp" ng-controller="MainCtrl as main">
@@ -80,6 +80,10 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/register">Register</a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" ng-click="main.logout()">Logout</a>
+                </li>
+
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">

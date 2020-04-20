@@ -1,4 +1,7 @@
 const User = require("../models/user");
+const Token = require("jsonwebtoken");
+const secret = 'node';
+
 
 
 module.exports = function(router) {
@@ -8,8 +11,8 @@ module.exports = function(router) {
         user.username = data.username;
         user.password = data.password;
         user.email = data.email;
-    
-    
+
+
         if (data.username == null || data.password == null || user.email == null) {
             res.json({
                 success: false,
@@ -17,35 +20,40 @@ module.exports = function(router) {
             });
         } else {
             user.save(function (err, doc) {
-                 if (err) {
-                    res.send(err);
-                } else {
-                    res.json({
-                        success: true,
-                        message: "User has been created!"
-                    });
-                }
-            });
+               if (err) {
+                res.send(err);
+            } else {
+                res.json({
+                    success: true,
+                    message: "User has been created!"
+                });
+            }
+        });
         }
     });
 
 
+
+
     router.post("/auth", (req, res) => {
-    
-       User.findOne({ username : req.body.username }).select('email username password').exec(function(err, user){
+
+     User.findOne({ username : req.body.username }).select('email username password').exec(function(err, user){
+
         if (err) throw err;
+
         if (!user) {
             res.json({
                 success: false, 
                 message: "User not authenticated!"
             });
+            
         } else if(user) { 
             if (!req.body.password) {
                 res.json({
                     success: false, 
                     message: "No password provided!"
                 });
-              
+
             } 
             const validPassword = user.comparePasswords(req.body.password);
             if (!validPassword) {
@@ -54,16 +62,18 @@ module.exports = function(router) {
                     message: "Not valid password!"
                 });
             } else {
+               const token =  Token.sign({ username: user.username,  password: user.password }, secret, { expiresIn: '24h'});
                 res.json({
                     success: true,
-                    message: "User authenticated!"
+                    message: "User authenticated!",
+                    token: token
                 });
             }
 
 
         }
-       });
     });
+ });
 
     
 
