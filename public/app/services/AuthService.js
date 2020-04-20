@@ -18,12 +18,24 @@ AuthFactory.logout = () => {
 	AuthToken.setToken();
 }
 
+// Auth.getUser()
+AuthFactory.getUser = () => {
+	if (AuthToken.getToken()) {
+		return $http.post('api/me');
+	} else {
+		$q.reject({
+			message: "user has no token"
+		});
+	}
+}
+
 return AuthFactory;
 })
 
 
 
 .factory("AuthToken", function($window) {
+
 AuthTokenFactory = {};
 
 AuthTokenFactory.setToken = function(token) {
@@ -43,4 +55,19 @@ AuthTokenFactory.getToken = () => {
 
 return AuthTokenFactory;
 
+})
+
+
+.factory('AuthInterceptors' , (AuthToken) => {
+	const authInterceptorsFactory = {};
+
+	authInterceptorsFactory.request = (config) => {
+		 const token = AuthToken.getToken();
+		 if (token) config.headers["x-access-token"] = token;
+		 config.headers["Pragma"] = "Cache";
+		 return config;
+	}
+
+
+	return authInterceptorsFactory;
 });
