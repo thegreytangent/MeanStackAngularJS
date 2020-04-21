@@ -4,10 +4,13 @@
         <div class="page-header">
             <h3>User Registration</h3>
         </div>
-    
+        
         <div class="alert alert-info" ng-show="register.isSuccess">{{ register.Msg}}</div>
         <div class="alert alert-danger" ng-show="!register.isSuccess && register.Msg">{{ register.Msg}}</div>
         <form ng-submit="register.submitRegisterUser()">
+            <label for="name">Name: </label>
+            <input type="text" name="name" id="name" class="form-control" ng-model="register.regData.name">
+            <br>
             <label for="email">Email: </label>
             <input type="text" name="email" id="email" class="form-control" ng-model="register.regData.email">
             <br>
@@ -26,5 +29,5 @@
             <p>loading</p>
         </div>
 
-    </div>
+    </div> 
 </div>

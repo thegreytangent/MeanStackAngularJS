@@ -62,7 +62,7 @@ angular.module('MainController', ['AuthService'])
           app.isSuccess = null;
           app.Msg = null;
           app.username = null;
-            $location.path("/");
+          $location.path("/");
       }, 2000);
     }
 

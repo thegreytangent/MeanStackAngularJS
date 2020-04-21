@@ -1,4 +1,6 @@
 const express = require("express");
+const https = require("https");
+const fs = require('fs')
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -7,7 +9,10 @@ const path = require('path');
 const appRoutes = require("./app/routes/api")(router);
 const app = express();
 
-const PORT = process.env.PORT || 666;
+const passport = require("passport");
+const social  = require("./app/passport/passport")(app, passport);
+
+const PORT = process.env.PORT || 3000;
 
 app.use(morgan('dev'))
 app.use(bodyParser.json());
@@ -34,6 +39,12 @@ mongoose.connect('mongodb://localhost:27017/MeanStack', {
 });
 
 
-app.listen(PORT, () => {
+https.createServer({
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert')
+}, app).listen(PORT, () => {
     console.log("listening to port ", PORT);
 });
+// app.listen(PORT, () => {
+//
+// });

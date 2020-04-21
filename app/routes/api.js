@@ -8,24 +8,41 @@ module.exports = function(router) {
   router.post("/users", (req, res) => {
     let data = req.body;
     const user = new User();
+    user.name = data.name;
     user.username = data.username;
     user.password = data.password;
     user.email = data.email;
 
 
-    if (data.username == null || data.password == null || user.email == null) {
+    if ( user.name == null || user.username == null || user.password == null || user.email == null ) {
       res.json({
         success: false,
         message: "Field cannot be empty"
       });
     } else {
       user.save(function (err, doc) {
+
         if (err) {
-          res.send(err);
+
+          if (err.errors) {
+            if(err.errors.name) {
+                res.json({ success: false, message: err.errors.name.message });
+            }else if (err.errors.email) {
+                res.json({ success: false, message: err.errors.email.message });
+            }else {
+                res.json({ success: false, message: err });
+            }
+          }else if (err) {
+              if (err.code == 11000) {
+                  res.json({ success: false, message: "Username or email is already taken!" });
+              } else {
+                  res.json({ success: false, message: err });
+              }
+          }
+
+
         } else {
-          res.json({
-            success: true,
-            message: "User has been created!"
+          res.json({ success: true, message: "User has been created!"
           });
         }
       });
@@ -63,10 +80,10 @@ module.exports = function(router) {
           });
         } else {
           const token =  Token.sign({
-             email: user.email,
-             username: user.username,
-             password: user.password
-           }, secret, { expiresIn: '24h'});
+           email: user.email,
+           username: user.username,
+           password: user.password
+         }, secret, { expiresIn: '24h'});
           res.json({
             success: true,
             message: "User authenticated!",
