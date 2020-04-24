@@ -1,33 +1,107 @@
 <div class="row">
-    <div class="col-lg-3"></div>
-    <div class="col-lg-3">
-        <div class="page-header">
-            <h3>User Registration</h3>
-        </div>
-        
-        <div class="alert alert-info" ng-show="register.isSuccess">{{ register.Msg}}</div>
-        <div class="alert alert-danger" ng-show="!register.isSuccess && register.Msg">{{ register.Msg}}</div>
-        <form ng-submit="register.submitRegisterUser()">
-            <label for="name">Name: </label>
-            <input type="text" name="name" id="name" class="form-control" ng-model="register.regData.name">
-            <br>
-            <label for="email">Email: </label>
-            <input type="text" name="email" id="email" class="form-control" ng-model="register.regData.email">
-            <br>
-            <label for="username">Username:s</label>
-            <input type="text" name="username" id="username" class="form-control" ng-model="register.regData.username">
-            <br>
-            <label for="password">Password: </label>
-            <input type="text" name="password" id="password" class="form-control" ng-model="register.regData.password">
-            <br>
-            <button class="btn btn-success" type="submt">Register</button>
-        </form>
+  <div class="col-lg-3"></div>
+  <div class="col-lg-3">
+    <div class="page-header">
+      <h3>User Registration</h3>
+    </div>
 
-        <br/>
-        <div class="jumbotron text-center" ng-show="register.loading    ">
-            <span class="glyphicon glyphicon-repeat spinner"></span>
-            <p>loading</p>
-        </div>
 
-    </div> 
+    <div class="alert alert-info" ng-show="register.isSuccess">{{ register.Msg}}</div>
+    <div class="alert alert-danger" ng-show="!register.isSuccess && register.Msg">{{ register.Msg}}</div>
+
+    <form name="regForm" ng-submit="register.submitRegisterUser(regForm.$valid)" novalidate>
+      <!-- <div class="form-group" ng-class="{'has-success':(regForm.name.$valid && !regForm.name.$pristine), 'has-error' : (!regForm.name.$valid && !regForm.name.$pristine) || (!regForm.name.$valid && regForm.$submitted) }"> -->
+
+
+      <label for="name" >Name: </label>
+      <input type="text" name="name" id="name" class="form-control"
+      ng-model="register.regData.name"
+      ng-pattern="/[a-zA-Z]+/g"
+      ng-class="{'is-valid':(regForm.name.$valid && !regForm.name.$pristine), 'is-invalid' : (!regForm.name.$valid && !regForm.name.$pristine) || (!regForm.name.$valid && regForm.$submitted) }"
+      ng-model="register.regData.name"
+      ng-minlength="3"
+      ng-maxlength="20"
+      required>
+      <p class="invalid-feedback"
+      ng-show="(!regForm.name.$pristine && regForm.name.$error.required) || (regForm.$submitted && regForm.name.$error.required)">
+      This field is required!
+    </p>
+    <ul class="invalid-feedback"
+    ng-show="(!regForm.name.$pristine && regForm.name.$error.pattern) || (!regForm.name.$pristine && regForm.name.$error.minlength) || (!regForm.name.$pristine && regForm.name.$error.maxlength) ">
+    <li>Must not contain any special characters.</li>
+    <li>Must not contain any numbers.</li>
+    <li>Must atleast 3 characters but not more than 20.</li>
+  </ul>
+
+
+  <br>
+  <label for="email">Email: </label>
+
+  <input type="text" name="email" id="email" class="form-control"
+  ng-model="register.regData.email"
+  ng-pattern="/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/"
+  ng-class="{'is-valid':(regForm.email.$valid && !regForm.email.$pristine), 'is-invalid' : (!regForm.email.$valid && !regForm.email.$pristine) || (!regForm.email.$valid && regForm.$submitted) }"
+  ng-model="register.regData.email"
+  ng-minlength="6"
+  ng-maxlength="20"
+
+  required />
+  <br>
+
+
+  <label for="username">Username:</label>
+  <input type="text" name="username" id="username" class="form-control"
+  ng-model="register.regData.username"
+  ng-model="register.regData.username"
+  ng-pattern="/[a-zA-Z]+/g"
+  ng-class="{'is-valid':(register.usernameValid && regForm.username.$valid && !regForm.username.$pristine), 'is-invalid' : (!register.usernameValid && !regForm.username.$valid && !regForm.username.$pristine) || (!regForm.username.$valid && regForm.$submitted) || !register.usernameValid }"
+  ng-model="register.regData.username"
+  ng-minlength="3"
+  ng-maxlength="20"
+  ng-blur="register.checkUsername(register.regData.username)"
+  required />
+  <span ng-show="checkingUsername" class="glyphicon glyphicon-repeat"></span>
+  <span ng-show="!register.usernameValid" style="color: red">
+    {{ register.usernameMessage }}
+  </span>
+
+
+  <br>
+
+  <label for="firstPassword">Password: </label>
+  <input type="text" name="firstPassword" id="firstPassword" class="form-control"
+  ng-model="register.regData.firstPassword"
+  ng-model="register.regData.username"
+  ng-model="register.regData.name"
+  ng-pattern="/[a-zA-Z]+/g"
+  ng-class="{'is-valid':(regForm.firstPassword.$valid && !regForm.firstPassword.$pristine), 'is-invalid' : (!regForm.firstPassword.$valid && !regForm.firstPassword.$pristine) || (!regForm.firstPassword.$valid && regForm.$submitted) }"
+  ng-model="register.regData.firstPassword"
+  ng-minlength="3"
+  ng-maxlength="20" >
+  <br>
+
+  <label for="confirmPassword">Confirm Password: </label> {{register.regData.firstPassword | json}}
+  <input type="text" name="confirmPassword" id="confirmPassword" class="form-control"
+  match="{{[register.regData.firstPassword]}}"
+  ng-model="confirm"
+  ng-model="register.regData.username"
+  ng-model="register.regData.name"
+  ng-pattern="/[a-zA-Z]+/g"
+  ng-class="{'is-valid':(confirmed) || (regForm.confirmPassword.$valid && !regForm.confirmPassword.$pristine), 'is-invalid' : (!confirmed || !regForm.confirmPassword.$valid && !regForm.confirmPassword.$pristine)}"
+  ng-model="register.regData.confirmPassword"
+  ng-minlength="3"
+  ng-maxlength="20" >
+  <br>
+  <p ng-show="!confirmed"  class="invalid-feedback">Password not match!</p>
+
+  <button class="btn btn-success" type="submt">Register</button>
+</form>
+
+
+<div class="jumbotron text-center" ng-show="register.loading">
+  <span class="glyphicon glyphicon-repeat spinner"></span>
+  <p>loading</p>
+</div>
+
+</div>
 </div>

@@ -39,12 +39,14 @@ mongoose.connect('mongodb://localhost:27017/MeanStack', {
 });
 
 
-https.createServer({
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.cert')
-}, app).listen(PORT, () => {
-    console.log("listening to port ", PORT);
-});
-// app.listen(PORT, () => {
-//
+// https.createServer({
+//   key: fs.readFileSync('server.key'),
+//   cert: fs.readFileSync('server.cert')
+// }, app).listen(PORT, () => {
+//     console.log("listening to port ", PORT);
 // });
+
+
+app.listen(PORT, () => {
+
+});
